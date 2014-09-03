@@ -229,10 +229,8 @@ public class Translate {
     private static boolean isSpecialMove(PacketEvent event) {
         double y = event.getPacket().getDoubles().read(1);
         double s = event.getPacket().getDoubles().read(3);
-        if ((y == -999.0D) && (s == -999.0D)) {
-            return true;
-        }
-        return false;
+
+        return (y == -999.0D) && (s == -999.0D);
     }
 
     private static boolean isSpecialPlace(PacketEvent event) {
@@ -240,9 +238,7 @@ public class Translate {
         int y = event.getPacket().getIntegers().read(1);
         int z = event.getPacket().getIntegers().read(2);
         int d = event.getPacket().getIntegers().read(3);
-        if ((x == -1) && (y == 255) && (z == -1) && (d == 255)) {
-            return true;
-        }
-        return false;
+
+        return (x == -1) && (y == 255) && (z == -1) && (d == 255);
     }
 }
