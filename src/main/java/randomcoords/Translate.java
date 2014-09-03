@@ -9,98 +9,102 @@ import com.comphenix.protocol.wrappers.nbt.NbtCompound;
 
 public class Translate {
     public static void outgoing(PacketEvent event) {
-        switch (event.getPacketType().getCurrentId()) {
-            case 5:
+        switch (OutboundPacket.getPacketType(event.getPacketType())) {
+            case SPAWN_POSITION:
                 sendInt(event, 0);
                 break;
-            case 7:
+            case RESPAWN:
                 RandomOffset.generateOffset(event.getPlayer());
                 break;
-            case 8:
+            case POSITION:
                 PrecisionFix.onServerChangePos(event, 0);
                 sendDouble(event, 0);
                 break;
-            case 10:
+            case BED:
                 sendInt(event, 1);
                 break;
-            case 12:
-            case 14:
+            case NAMED_ENTITY_SPAWN:
+            case SPAWN_ENTITY:
                 sendInt32(event, 1);
                 break;
-            case 15:
+            case SPAWN_ENTITY_LIVING:
                 sendInt32(event, 2);
                 break;
-            case 16:
+            case SPAWN_ENTITY_PAINTING:
                 sendInt(event, 1);
                 break;
-            case 17:
-            case 24:
+            case SPAWN_ENTITY_EXPERIENCE_ORB:
+            case ENTITY_TELEPORT:
                 sendInt32(event, 1);
                 break;
-            case 33:
+            case MAP_CHUNK:
                 sendChunk(event, 0);
                 break;
-            case 34:
+            case MULTI_BLOCK_CHANGE:
                 sendChunkUpdate(event, 0);
                 break;
-            case 35:
-            case 36:
+            case BLOCK_CHANGE:
+            case BLOCK_ACTION:
                 sendInt(event, 0);
                 break;
-            case 37:
+            case BLOCK_BREAK_ANIMATION:
                 sendInt(event, 1);
                 break;
-            case 38:
+            case MAP_CHUNK_BULK:
                 sendChunkBulk(event);
                 break;
-            case 39:
+            case EXPLOSION:
                 sendExplosion(event);
                 break;
-            case 40:
+            case WORLD_EVENT:
                 sendInt(event, 2);
                 break;
-            case 41:
+            case NAMED_SOUND_EFFECT:
                 sendInt8(event, 0);
                 break;
-            case 42:
+            case WORLD_PARTICLES:
                 sendFloat(event, 1);
                 break;
-            case 44:
+            case SPAWN_ENTITY_WEATHER:
                 sendInt32(event, 1);
                 break;
-            case 51:
+            case UPDATE_SIGN:
                 sendInt(event, 0);
                 break;
-            case 53:
+            case TILE_ENTITY_DATA:
                 sendTileEntityData(event);
                 break;
-            case 54:
+            case OPEN_SIGN_ENTITY:
                 sendInt(event, 0);
+                break;
+            case UNKNOWN:
                 break;
         }
     }
 
     public static void incoming(PacketEvent event) {
-        switch (event.getPacketType().getCurrentId()) {
-            case 4:
+        switch (InboundPacket.getPacketType(event.getPacketType())) {
+            case POSITION:
                 recvDouble(event, 0);
                 break;
-            case 6:
+            case POSITION_LOOK:
                 if (!isSpecialMove(event)) {
                     recvDouble(event, 0);
                     PrecisionFix.onClientChangePos(event, 0);
                 }
                 break;
-            case 7:
+            case BLOCK_DIG:
                 recvInt(event, 0);
                 break;
-            case 8:
+            case BLOCK_PLACE:
                 if (!isSpecialPlace(event)) {
                     recvInt(event, 0);
                 }
                 break;
-            case 18:
+            case UPDATE_SIGN:
                 recvInt(event, 0);
+                break;
+            case UNKNOWN:
                 break;
         }
     }
