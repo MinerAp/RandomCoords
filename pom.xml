@@ -6,7 +6,7 @@
 	<groupId>com.folipurba</groupId>
 	<artifactId>randomcoords</artifactId>
 	<name>RandomCoords</name>
-	<version>1.6b2</version>
+	<version>1.6b3</version>
 
 	<dependencies>
 		<dependency>
