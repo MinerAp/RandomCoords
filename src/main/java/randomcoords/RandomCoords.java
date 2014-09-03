@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,11 +22,9 @@ import com.comphenix.protocol.injector.GamePhase;
 import com.comphenix.protocol.reflect.StructureModifier;
 
 public class RandomCoords extends JavaPlugin implements Listener {
-    private static RandomCoords self = null;
 
+    @Override
     public void onEnable() {
-        self = this;
-
         Bukkit.getPluginManager().registerEvents(this, this);
 
         final ProtocolManager pm = ProtocolLibrary.getProtocolManager();
@@ -91,11 +90,7 @@ public class RandomCoords extends JavaPlugin implements Listener {
           });
     }
 
-    public static RandomCoords getInstance() {
-        return self;
-    }
-
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerQuit(PlayerQuitEvent event) {
         RandomOffset.removeOffset(event.getPlayer());
         PrecisionFix.removePosition(event.getPlayer());
