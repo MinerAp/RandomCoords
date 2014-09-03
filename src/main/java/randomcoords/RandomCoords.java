@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.comphenix.protocol.PacketType;
@@ -17,14 +20,14 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.injector.GamePhase;
 import com.comphenix.protocol.reflect.StructureModifier;
 
-public class RandomCoords extends JavaPlugin {
+public class RandomCoords extends JavaPlugin implements Listener {
     private static RandomCoords self = null;
 
     public void onEnable() {
         self = this;
 
-        Bukkit.getPluginManager().registerEvents(new RandomOffset(), this);
-        Bukkit.getPluginManager().registerEvents(new PrecisionFix(), this);
+        Bukkit.getPluginManager().registerEvents(this, this);
+
         final ProtocolManager pm = ProtocolLibrary.getProtocolManager();
 
         PacketAdapter.AdapterParameteters paramsServer = PacketAdapter.params();
@@ -90,5 +93,11 @@ public class RandomCoords extends JavaPlugin {
 
     public static RandomCoords getInstance() {
         return self;
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        RandomOffset.clean(event.getPlayer());
+        PrecisionFix.clean(event.getPlayer());
     }
 }

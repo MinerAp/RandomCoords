@@ -3,11 +3,8 @@ package randomcoords;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
 
-public class RandomOffset implements Listener {
+public class RandomOffset {
     private static ConcurrentHashMap<String, Integer> x = new ConcurrentHashMap<String, Integer>();
     private static ConcurrentHashMap<String, Integer> z = new ConcurrentHashMap<String, Integer>();
 
@@ -49,10 +46,5 @@ public class RandomOffset implements Listener {
     public static void clean(Player player) {
         x.remove(player.getName());
         z.remove(player.getName());
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        clean(event.getPlayer());
     }
 }

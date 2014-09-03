@@ -3,13 +3,10 @@ package randomcoords;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.comphenix.protocol.events.PacketEvent;
 
-public class PrecisionFix implements Listener {
+public class PrecisionFix {
     private static final ConcurrentHashMap<String, Double> x = new ConcurrentHashMap<String, Double>();
     private static final ConcurrentHashMap<String, Double> z = new ConcurrentHashMap<String, Double>();
 
@@ -43,10 +40,5 @@ public class PrecisionFix implements Listener {
     public static void clean(Player player) {
         x.remove(player.getName());
         z.remove(player.getName());
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        clean(event.getPlayer());
     }
 }
