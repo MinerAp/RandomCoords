@@ -1,12 +1,12 @@
 package randomcoords;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.entity.Player;
 
 public class RandomOffset {
-    private static ConcurrentHashMap<String, Integer> x = new ConcurrentHashMap<String, Integer>();
-    private static ConcurrentHashMap<String, Integer> z = new ConcurrentHashMap<String, Integer>();
+    private static Map<String, Offset<Integer>> xz = new ConcurrentHashMap<String, Offset<Integer>>();
 
     public static void newOffset(Player player) {
         int n = 65536;
@@ -25,26 +25,25 @@ public class RandomOffset {
             x = 0;
             z = 0;
         }
-        RandomOffset.x.put(player.getName(), x);
-        RandomOffset.z.put(player.getName(), z);
+
+        xz.put(player.getName(), new Offset<Integer>(x, z));
     }
 
     public static Integer getX(Player player) {
-        if (!x.containsKey(player.getName())) {
+        if (!xz.containsKey(player.getName())) {
             newOffset(player);
         }
-        return (Integer) x.get(player.getName());
+        return xz.get(player.getName()).getX();
     }
 
     public static Integer getZ(Player player) {
-        if (!z.containsKey(player.getName())) {
+        if (!xz.containsKey(player.getName())) {
             newOffset(player);
         }
-        return (Integer) z.get(player.getName());
+        return xz.get(player.getName()).getZ();
     }
 
     public static void clean(Player player) {
-        x.remove(player.getName());
-        z.remove(player.getName());
+        xz.remove(player.getName());
     }
 }
