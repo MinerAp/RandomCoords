@@ -1,0 +1,8 @@
+author: Alexander Hesse
+name: RandomCoords
+main: randomcoords.RandomCoords
+version: 1.6b2
+depend: [ProtocolLib]
+permissions:
+  randomcoords.bypass:
+    default: op
