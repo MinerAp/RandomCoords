@@ -97,7 +97,7 @@ public class RandomCoords extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        RandomOffset.clean(event.getPlayer());
-        PrecisionFix.clean(event.getPlayer());
+        RandomOffset.removeOffset(event.getPlayer());
+        PrecisionFix.removePosition(event.getPlayer());
     }
 }

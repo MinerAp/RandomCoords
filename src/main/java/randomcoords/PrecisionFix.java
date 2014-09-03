@@ -34,7 +34,7 @@ public class PrecisionFix {
         xz.remove(event.getPlayer().getName());
     }
 
-    public static void clean(Player player) {
+    public static void removePosition(Player player) {
         xz.remove(player.getName());
     }
 }

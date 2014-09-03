@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class RandomOffset {
     private static Map<String, Offset<Integer>> xz = new ConcurrentHashMap<String, Offset<Integer>>();
 
-    public static void newOffset(Player player) {
+    public static void generateOffset(Player player) {
         int n = 65536;
 
         int min_x = -n - player.getLocation().getBlockX() / 16;
@@ -29,21 +29,15 @@ public class RandomOffset {
         xz.put(player.getName(), new Offset<Integer>(x, z));
     }
 
-    public static Integer getX(Player player) {
-        if (!xz.containsKey(player.getName())) {
-            newOffset(player);
-        }
-        return xz.get(player.getName()).getX();
-    }
-
-    public static Integer getZ(Player player) {
-        if (!xz.containsKey(player.getName())) {
-            newOffset(player);
-        }
-        return xz.get(player.getName()).getZ();
-    }
-
-    public static void clean(Player player) {
+    public static void removeOffset(Player player) {
         xz.remove(player.getName());
+    }
+
+    public static Offset<Integer> getOffset(Player player) {
+        if (!xz.containsKey(player.getName())) {
+            generateOffset(player);
+        }
+
+        return xz.get(player.getName());
     }
 }
