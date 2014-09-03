@@ -107,35 +107,35 @@ public class Translate {
 
     private static void sendInt(PacketEvent event, int index) {
         Player p = event.getPlayer();
-        int curr_x = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 0)).intValue();
-        int curr_z = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 2)).intValue();
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 0, Integer.valueOf(curr_x + RandomOffset.getX(p).intValue()));
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 2, Integer.valueOf(curr_z + RandomOffset.getZ(p).intValue()));
+        int curr_x = event.getPacket().getIntegers().read(index + 0);
+        int curr_z = event.getPacket().getIntegers().read(index + 2);
+        event.getPacket().getIntegers().write(index + 0, curr_x + RandomOffset.getX(p));
+        event.getPacket().getIntegers().write(index + 2, curr_z + RandomOffset.getZ(p));
     }
 
     private static void sendDouble(PacketEvent event, int index) {
         Player p = event.getPlayer();
-        double curr_x = ((Double) event.getPacket().getSpecificModifier(Double.TYPE).read(index + 0)).doubleValue();
-        double curr_z = ((Double) event.getPacket().getSpecificModifier(Double.TYPE).read(index + 2)).doubleValue();
-        event.getPacket().getSpecificModifier(Double.TYPE).write(index + 0, Double.valueOf(curr_x + RandomOffset.getX(p).intValue()));
-        event.getPacket().getSpecificModifier(Double.TYPE).write(index + 2, Double.valueOf(curr_z + RandomOffset.getZ(p).intValue()));
+        double curr_x = event.getPacket().getDoubles().read(index + 0);
+        double curr_z = event.getPacket().getDoubles().read(index + 2);
+        event.getPacket().getDoubles().write(index + 0, curr_x + RandomOffset.getX(p));
+        event.getPacket().getDoubles().write(index + 2, curr_z + RandomOffset.getZ(p));
     }
 
     private static void sendFloat(PacketEvent event, int index) {
         Player p = event.getPlayer();
-        float curr_x = ((Float) event.getPacket().getSpecificModifier(Float.TYPE).read(index + 0)).floatValue();
-        float curr_z = ((Float) event.getPacket().getSpecificModifier(Float.TYPE).read(index + 2)).floatValue();
-        event.getPacket().getSpecificModifier(Float.TYPE).write(index + 0, Float.valueOf(curr_x + RandomOffset.getX(p).intValue()));
-        event.getPacket().getSpecificModifier(Float.TYPE).write(index + 2, Float.valueOf(curr_z + RandomOffset.getZ(p).intValue()));
+        float curr_x = event.getPacket().getFloat().read(index + 0);
+        float curr_z = event.getPacket().getFloat().read(index + 2);
+        event.getPacket().getFloat().write(index + 0, curr_x + RandomOffset.getX(p));
+        event.getPacket().getFloat().write(index + 2, curr_z + RandomOffset.getZ(p));
     }
 
     private static void sendChunk(PacketEvent event, int index) {
         Player p = event.getPlayer();
 
-        int curr_x = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 0)).intValue();
-        int curr_z = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 1)).intValue();
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 0, Integer.valueOf(curr_x + RandomOffset.getX(p).intValue() / 16));
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 1, Integer.valueOf(curr_z + RandomOffset.getZ(p).intValue() / 16));
+        int curr_x = event.getPacket().getIntegers().read(index + 0);
+        int curr_z = event.getPacket().getIntegers().read(index + 1);
+        event.getPacket().getIntegers().write(index + 0, curr_x + RandomOffset.getX(p) / 16);
+        event.getPacket().getIntegers().write(index + 1, curr_z + RandomOffset.getZ(p) / 16);
     }
 
     private static void sendChunkUpdate(PacketEvent event, int index) {
@@ -145,37 +145,37 @@ public class Translate {
         int curr_x = curr_pos.getChunkX();
         int curr_z = curr_pos.getChunkZ();
 
-        ChunkCoordIntPair new_pos = new ChunkCoordIntPair(curr_x + RandomOffset.getX(p).intValue() / 16, curr_z + RandomOffset.getZ(p).intValue() / 16);
+        ChunkCoordIntPair new_pos = new ChunkCoordIntPair(curr_x + RandomOffset.getX(p) / 16, curr_z + RandomOffset.getZ(p) / 16);
         event.getPacket().getChunkCoordIntPairs().write(0, new_pos);
     }
 
     private static void sendChunkBulk(PacketEvent event) {
         Player p = event.getPlayer();
 
-        int[] curr_x = (int[]) ((int[]) event.getPacket().getSpecificModifier(int[].class).read(0)).clone();
-        int[] curr_z = (int[]) ((int[]) event.getPacket().getSpecificModifier(int[].class).read(1)).clone();
+        int[] curr_x = (int[]) event.getPacket().getIntegerArrays().read(0).clone();
+        int[] curr_z = (int[]) event.getPacket().getIntegerArrays().read(1).clone();
         for (int c = 0; c < curr_x.length; c++) {
-            curr_x[c] += RandomOffset.getX(p).intValue() / 16;
-            curr_z[c] += RandomOffset.getZ(p).intValue() / 16;
+            curr_x[c] += RandomOffset.getX(p) / 16;
+            curr_z[c] += RandomOffset.getZ(p) / 16;
         }
-        event.getPacket().getSpecificModifier(int[].class).write(0, curr_x);
-        event.getPacket().getSpecificModifier(int[].class).write(1, curr_z);
+        event.getPacket().getIntegerArrays().write(0, curr_x);
+        event.getPacket().getIntegerArrays().write(1, curr_z);
     }
 
     private static void sendInt8(PacketEvent event, int index) {
         Player p = event.getPlayer();
-        int curr_x = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 0)).intValue();
-        int curr_z = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 2)).intValue();
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 0, Integer.valueOf(curr_x + 8 * RandomOffset.getX(p).intValue()));
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 2, Integer.valueOf(curr_z + 8 * RandomOffset.getZ(p).intValue()));
+        int curr_x = event.getPacket().getIntegers().read(index + 0);
+        int curr_z = event.getPacket().getIntegers().read(index + 2);
+        event.getPacket().getIntegers().write(index + 0, curr_x + 8 * RandomOffset.getX(p));
+        event.getPacket().getIntegers().write(index + 2, curr_z + 8 * RandomOffset.getZ(p));
     }
 
     private static void sendInt32(PacketEvent event, int index) {
         Player p = event.getPlayer();
-        int curr_x = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 0)).intValue();
-        int curr_z = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 2)).intValue();
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 0, Integer.valueOf(curr_x + 32 * RandomOffset.getX(p).intValue()));
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 2, Integer.valueOf(curr_z + 32 * RandomOffset.getZ(p).intValue()));
+        int curr_x = event.getPacket().getIntegers().read(index + 0);
+        int curr_z = event.getPacket().getIntegers().read(index + 2);
+        event.getPacket().getIntegers().write(index + 0, curr_x + 32 * RandomOffset.getX(p));
+        event.getPacket().getIntegers().write(index + 2, curr_z + 32 * RandomOffset.getZ(p));
     }
 
     private static void sendExplosion(PacketEvent event) {
@@ -185,9 +185,9 @@ public class Translate {
         for (int i = 0; i < lst.size(); i++) {
             ChunkPosition curr = (ChunkPosition) lst.get(i);
             ChunkPosition next = new ChunkPosition(
-                                                   curr.getX() + RandomOffset.getX(event.getPlayer()).intValue(),
+                                                   curr.getX() + RandomOffset.getX(event.getPlayer()),
                                                    curr.getY(),
-                                                   curr.getZ() + RandomOffset.getZ(event.getPlayer()).intValue());
+                                                   curr.getZ() + RandomOffset.getZ(event.getPlayer()));
 
             lst.set(i, next);
         }
@@ -199,29 +199,29 @@ public class Translate {
 
         Player p = event.getPlayer();
         NbtCompound nbt = (NbtCompound) event.getPacket().getNbtModifier().read(0);
-        nbt.put("x", nbt.getInteger("x") + RandomOffset.getX(p).intValue());
-        nbt.put("z", nbt.getInteger("z") + RandomOffset.getZ(p).intValue());
+        nbt.put("x", nbt.getInteger("x") + RandomOffset.getX(p));
+        nbt.put("z", nbt.getInteger("z") + RandomOffset.getZ(p));
     }
 
     private static void recvInt(PacketEvent event, int index) {
         Player p = event.getPlayer();
-        int curr_x = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 0)).intValue();
-        int curr_z = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(index + 2)).intValue();
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 0, Integer.valueOf(curr_x - RandomOffset.getX(p).intValue()));
-        event.getPacket().getSpecificModifier(Integer.TYPE).write(index + 2, Integer.valueOf(curr_z - RandomOffset.getZ(p).intValue()));
+        int curr_x = event.getPacket().getIntegers().read(index + 0);
+        int curr_z = event.getPacket().getIntegers().read(index + 2);
+        event.getPacket().getIntegers().write(index + 0, curr_x - RandomOffset.getX(p));
+        event.getPacket().getIntegers().write(index + 2, curr_z - RandomOffset.getZ(p));
     }
 
     private static void recvDouble(PacketEvent event, int index) {
         Player p = event.getPlayer();
-        double curr_x = ((Double) event.getPacket().getSpecificModifier(Double.TYPE).read(index + 0)).doubleValue();
-        double curr_z = ((Double) event.getPacket().getSpecificModifier(Double.TYPE).read(index + 2)).doubleValue();
-        event.getPacket().getSpecificModifier(Double.TYPE).write(index + 0, Double.valueOf(curr_x - RandomOffset.getX(p).intValue()));
-        event.getPacket().getSpecificModifier(Double.TYPE).write(index + 2, Double.valueOf(curr_z - RandomOffset.getZ(p).intValue()));
+        double curr_x = event.getPacket().getDoubles().read(index + 0);
+        double curr_z = event.getPacket().getDoubles().read(index + 2);
+        event.getPacket().getDoubles().write(index + 0, curr_x - RandomOffset.getX(p));
+        event.getPacket().getDoubles().write(index + 2, curr_z - RandomOffset.getZ(p));
     }
 
     private static boolean isSpecialMove(PacketEvent event) {
-        double y = ((Double) event.getPacket().getSpecificModifier(Double.TYPE).read(1)).doubleValue();
-        double s = ((Double) event.getPacket().getSpecificModifier(Double.TYPE).read(3)).doubleValue();
+        double y = event.getPacket().getDoubles().read(1);
+        double s = event.getPacket().getDoubles().read(3);
         if ((y == -999.0D) && (s == -999.0D)) {
             return true;
         }
@@ -229,10 +229,10 @@ public class Translate {
     }
 
     private static boolean isSpecialPlace(PacketEvent event) {
-        int x = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(0)).intValue();
-        int y = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(1)).intValue();
-        int z = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(2)).intValue();
-        int d = ((Integer) event.getPacket().getSpecificModifier(Integer.TYPE).read(3)).intValue();
+        int x = event.getPacket().getIntegers().read(0);
+        int y = event.getPacket().getIntegers().read(1);
+        int z = event.getPacket().getIntegers().read(2);
+        int d = event.getPacket().getIntegers().read(3);
         if ((x == -1) && (y == 255) && (z == -1) && (d == 255)) {
             return true;
         }

@@ -34,10 +34,10 @@ public class RandomCoords extends JavaPlugin {
         paramsServer.gamePhase(GamePhase.BOTH);
 
         HashSet<Integer> packetTypes = new HashSet<Integer>();
-        packetTypes.addAll(Arrays.asList(new Integer[] { Integer.valueOf(5), Integer.valueOf(7), Integer.valueOf(8), Integer.valueOf(10), Integer.valueOf(12), Integer.valueOf(14), Integer.valueOf(15), Integer.valueOf(16), Integer.valueOf(17), Integer.valueOf(24), Integer.valueOf(33), Integer.valueOf(34), Integer.valueOf(35), Integer.valueOf(36), Integer.valueOf(37), Integer.valueOf(38), Integer.valueOf(39), Integer.valueOf(40), Integer.valueOf(41), Integer.valueOf(42), Integer.valueOf(44), Integer.valueOf(51), Integer.valueOf(53), Integer.valueOf(54) }));
+        packetTypes.addAll(Arrays.asList(new Integer[] { 5, 7, 8, 10, 12, 14, 15, 16, 17, 24, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 51, 53, 54 }));
         HashSet<PacketType> packets = new HashSet<PacketType>();
         for (PacketType t : PacketType.values()) {
-            if ((t.isServer()) && (packetTypes.contains(Integer.valueOf(t.getCurrentId())))) {
+            if ((t.isServer()) && (packetTypes.contains(t.getCurrentId()))) {
                 packets.add(t);
             }
         }
@@ -51,9 +51,9 @@ public class RandomCoords extends JavaPlugin {
 
         packetTypes.clear();
         packets.clear();
-        packetTypes.addAll(Arrays.asList(new Integer[] { Integer.valueOf(4), Integer.valueOf(6), Integer.valueOf(7), Integer.valueOf(8), Integer.valueOf(18) }));
+        packetTypes.addAll(Arrays.asList(new Integer[] { 4, 6, 7, 8, 18 }));
         for (PacketType t : PacketType.values()) {
-            if ((t.isClient()) && (packetTypes.contains(Integer.valueOf(t.getCurrentId())))) {
+            if ((t.isClient()) && (packetTypes.contains(t.getCurrentId()))) {
                 packets.add(t);
             }
         }

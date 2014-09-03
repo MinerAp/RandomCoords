@@ -28,8 +28,8 @@ public class RandomOffset implements Listener {
             x = 0;
             z = 0;
         }
-        RandomOffset.x.put(player.getName(), Integer.valueOf(x));
-        RandomOffset.z.put(player.getName(), Integer.valueOf(z));
+        RandomOffset.x.put(player.getName(), x);
+        RandomOffset.z.put(player.getName(), z);
     }
 
     public static Integer getX(Player player) {
