@@ -2,7 +2,10 @@ package randomcoords;
 
 import java.util.List;
 
+import org.bukkit.Location;
+
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.ChunkCoordIntPair;
 import com.comphenix.protocol.wrappers.ChunkPosition;
 import com.comphenix.protocol.wrappers.nbt.NbtCompound;
@@ -11,6 +14,15 @@ public class Translate {
     public static void outgoing(PacketEvent event) {
         switch (OutboundPacket.getPacketType(event.getPacketType())) {
             case SPAWN_POSITION:
+                StructureModifier<Integer> values = event.getPacket().getIntegers();
+                Location loc = event.getPlayer().getWorld().getSpawnLocation();
+                if (loc.getX() == values.read(0) && loc.getY() == values.read(1) && loc.getZ() == values.read(2)) {
+                    values.write(0, 0);
+                    values.write(1, 0);
+                    values.write(2, 0);
+                    break;
+                }
+
                 sendInt(event, 0);
                 break;
             case RESPAWN:
